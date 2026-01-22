@@ -2,25 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import SidebarMenu from "../layout/Sidebar";
 
-
-
 export function ComparePage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const initialPolicies = location.state?.selectedPolicies || [];
-  const [selectedPolicies, setSelectedPolicies] = useState(initialPolicies);
+  // Initialize selectedPolicies from location.state or empty array
+  const [selectedPolicies, setSelectedPolicies] = useState(
+    location.state?.selectedPolicies || []
+  );
 
   // Redirect if accessed directly or less than 2 policies
   useEffect(() => {
-    if (!initialPolicies || initialPolicies.length < 2) {
+    if (!selectedPolicies || selectedPolicies.length < 2) {
       navigate("/", {
         replace: true,
         state: { message: "Please select at least 2 policies to compare" },
       });
     }
-  }, [initialPolicies, navigate]);
+  }, [selectedPolicies, navigate]);
 
+  // Early return if not enough policies
   if (!selectedPolicies || selectedPolicies.length < 2) return null;
 
   const handleRemovePolicy = (policyId) => {
@@ -66,9 +67,7 @@ export function ComparePage() {
         <SidebarMenu />
       </div>
       <main className="flex-1 p-6 bg-gray-100">
-        <h2 className="text-2xl font-bold mb-6 text-center">
-          Compare Policies
-        </h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Compare Policies</h2>
 
         <div className="overflow-x-auto">
           <table className="w-full border-collapse bg-white rounded-lg overflow-hidden">
@@ -124,4 +123,5 @@ export function ComparePage() {
     </div>
   );
 }
+
 export default ComparePage;
