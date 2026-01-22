@@ -8,21 +8,12 @@ from src.auth.routes.auth_otp_routes import router as register_otp_router
 from src.auth.routes.forgot_password import router as forgot_password_router
 from src.notifications.routes.notification_routes import router as notification_router
 
-
-from src.database.core import Base, engine
-from src.notifications.models import Notification
-
-
-Base.metadata.create_all(bind=engine)
-
 app = FastAPI()
 
+# ✅ CORS (safe for now, restrict later)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-    ],
+    allow_origins=["*"],  # allow all during development
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -32,6 +23,7 @@ app.add_middleware(
 def root():
     return {"message": "Server running"}
 
+# Routers
 app.include_router(api_router, prefix="/api")
 app.include_router(policy_router, prefix="/policies")
 app.include_router(auth_router)
@@ -43,6 +35,3 @@ app.include_router(
     prefix="/notifications",
     tags=["notifications"]
 )
-
-app.include_router(notification_router)
-
