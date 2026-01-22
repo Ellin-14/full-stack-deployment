@@ -1,0 +1,41 @@
+# Python / FastAPI ignores
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# Packaging
+build/
+dist/
+.eggs/
+lib/
+lib64/
+
+# Logs
+*.log
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Editor
+.vscode/
+.idea/
+
+# Environment variables
+.env
+.env.*
+
+# DB files
+# Database files
+*.db
+*.sqlite3
+server\.env
+

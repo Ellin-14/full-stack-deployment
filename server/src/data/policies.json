@@ -1,0 +1,16 @@
+[
+  {
+    "type": "Car Insurance",
+    "policy_no": "POL-C-876543",
+    "premium": 750,
+    "expires_on": "2025-09-01",
+    "status": "Active"
+  },
+  {
+    "type": "Home Insurance",
+    "policy_no": "POL-H-234567",
+    "premium": 1200,
+    "expires_on": "2025-11-15",
+    "status": "Active"
+  }
+]

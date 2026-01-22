@@ -1,0 +1,16 @@
+{
+  "status_breakdown": {
+    "approved": 4,
+    "pending": 2,
+    "rejected": 1
+  },
+  "recent_claims": [
+    {
+      "claim_no": "CLM-1023",
+      "type": "Auto",
+      "date": "2024-11-10",
+      "amount": 1200,
+      "status": "Approved"
+    }
+  ]
+}
