@@ -13,7 +13,8 @@ app = FastAPI()
 # ✅ CORS (safe for now, restrict later)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # allow all during development
+    allow_origins=["http://localhost:3000",  # local frontend
+    "https://full-stack-deployment-nmjt-7w9mi6rtf.vercel.app"],  # allow all during development
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
