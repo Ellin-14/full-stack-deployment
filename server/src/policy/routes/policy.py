@@ -1,19 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from src.database.core import SessionLocal,get_db
-from src.users.models import Policy, UserPolicy
 
+from src.database.core import get_db
+from src.users.models import Policy, UserPolicy
 from src.notifications.service import create_notification
 from src.auth.dependencies import get_current_user
 
 router = APIRouter()
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 @router.get("/")
 def get_policies(db: Session = Depends(get_db)):
@@ -37,18 +30,15 @@ def get_policy_filters(db: Session = Depends(get_db)):
 
     return {
         "types": policy_types,
-        "ranges":  coverage_ranges
+        "ranges": coverage_ranges
     }
 
 @router.get("/details/{policy_id}")
 def get_policy_by_id(policy_id: int, db: Session = Depends(get_db)):
     policy = db.query(Policy).filter(Policy.id == policy_id).first()
-
     if not policy:
         raise HTTPException(status_code=404, detail="Policy not found")
-
     return policy
-
 
 @router.post("/{policy_id}/buy")
 def buy_policy(
@@ -58,9 +48,8 @@ def buy_policy(
 ):
     policy = db.query(Policy).filter(Policy.id == policy_id).first()
     if not policy:
-        return {"detail": "Policy not found"}
+        raise HTTPException(status_code=404, detail="Policy not found")
 
-    # save purchased policy
     user_policy = UserPolicy(
         user_id=current_user.id,
         policy_id=policy.id
@@ -68,7 +57,6 @@ def buy_policy(
     db.add(user_policy)
     db.commit()
 
-    # 🔔 CREATE NOTIFICATION
     create_notification(
         db=db,
         user_id=current_user.id,
