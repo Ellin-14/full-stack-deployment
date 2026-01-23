@@ -2,6 +2,11 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
+
+
+
+
+
 # ✅ LOAD ENV FIRST
 if os.getenv("VERCEL") is None:
     try:
@@ -12,6 +17,8 @@ if os.getenv("VERCEL") is None:
 
 # ✅ IMPORT AFTER env is loaded
 from src.database.config import DATABASE_URL
+
+print("DATABASE_URL =", DATABASE_URL)
 
 engine = create_engine(
     DATABASE_URL,
@@ -32,3 +39,6 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+
