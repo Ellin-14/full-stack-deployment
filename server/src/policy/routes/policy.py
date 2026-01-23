@@ -65,3 +65,13 @@ def buy_policy(
     )
 
     return {"message": "Policy purchased"}
+
+@router.get("/")
+def get_policies(db: Session = Depends(get_db)):
+    try:
+        policies = db.query(Policy).all()
+        return policies
+    except Exception as e:
+        print("❌ ERROR:", e)
+        raise HTTPException(status_code=500, detail=str(e))
+
